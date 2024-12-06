@@ -34,6 +34,7 @@ def preprocess(data):
     return zip(a, b)
 
 
+# Most expensive ops are the sorts. O(nlogn)
 def solve_1(data):
     data = preprocess(data)
     return reduce(reducer, data, 0)
@@ -42,4 +43,33 @@ def solve_1(data):
 # Get the solution for part 1
 data = load(INPUT_PATH)
 solution_1 = solve_1(data)
+print(solution_1)
+
+
+# Start part 2
+def preprocess_2(data):
+    # Split, convert to ints
+    a, b = [], []
+
+    for line in data:
+        left, right = line.split('   ')
+        a.append(int(left))
+        b.append(int(right))
+
+    return a, b
+
+
+# Brute force, nothing clever to see here. O(n^2)
+def solve_2(data: tuple[list[int], list[int]]):
+    left, right = preprocess_2(data)
+    total = 0
+
+    for el in left:
+        value = el * right.count(el)
+        total += value
+
+    return total
+
+
+solution_1 = solve_2(data)
 print(solution_1)
